@@ -55,3 +55,18 @@ check references/commands.md \
   "camofox health" \
   "camofox links" \
   "curl -s"
+
+check references/macros.md \
+  "@google_search" \
+  "@youtube_search" \
+  "@amazon_search" \
+  "@reddit_search" \
+  "@wikipedia_search" \
+  "@twitter_search" \
+  "@yelp_search" \
+  "@spotify_search" \
+  "@netflix_search" \
+  "@linkedin_search" \
+  "@instagram_search" \
+  "@tiktok_search" \
+  "@twitch_search"
