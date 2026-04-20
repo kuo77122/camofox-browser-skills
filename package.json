@@ -1,0 +1,23 @@
+{
+  "name": "camofox-browser-skills",
+  "version": "0.1.0",
+  "description": "Dual-mode (CLI + Remote) Camoufox anti-detection browser skill for Claude Code / OpenClaw agents.",
+  "license": "MIT",
+  "author": "kuo77122 <kuo77122@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kuo77122/camofox-browser-skills.git"
+  },
+  "keywords": [
+    "claude-code",
+    "skill",
+    "camoufox",
+    "anti-detection",
+    "browser",
+    "automation",
+    "openclaw"
+  ],
+  "skills": {
+    "camofox-browser": "./camofox-browser"
+  }
+}
