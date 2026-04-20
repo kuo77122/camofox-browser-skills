@@ -27,8 +27,8 @@ do
   fi
 done
 
-for cmd in open navigate snapshot click type scroll screenshot tabs close close-all search back forward refresh health; do
-  if ! grep -qE "\\bcamofox $cmd\\b|\\b$cmd\\b" "$F"; then
+for cmd in open navigate snapshot click type scroll screenshot tabs close close-all search back forward refresh health links start stop; do
+  if ! grep -qE "\\bcamofox $cmd\\b|\`$cmd\\b" "$F"; then
     echo "FAIL: SKILL.md missing command '$cmd'" >&2
     exit 1
   fi
