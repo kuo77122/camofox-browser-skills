@@ -4,7 +4,7 @@
 |---|---|---|
 | `curl: (7) Failed to connect to ... 9377` (Remote mode) | Camofox container not running | Run `docker ps` on the host; start the container (`docker compose up -d camofox`). Confirm `CAMOFOX_URL` is reachable from inside the agent container. |
 | `curl: (7) Failed to connect to localhost 9377` (CLI mode) | Server didn't start, or died | `cat /tmp/camofox-state/server.log` for the stack. Common causes: port in use, Node <18, Camoufox browser download failed. `camofox stop && camofox start`. |
-| `{"status":"ok"}` never returned | Wrong port / URL | Remote: re-check `CAMOFOX_URL` (no trailing slash). CLI: `echo $CAMOFOX_PORT`; it must match the server's `PORT` env. |
+| `{"ok":true}` never returned | Wrong port / URL | Remote: re-check `CAMOFOX_URL` (no trailing slash). CLI: `echo $CAMOFOX_PORT`; it must match the server's `PORT` env. |
 | `Empty snapshot` or very short snapshot | Page still loading (SPA, JS-heavy site) | `sleep 2` (or `camofox scroll down` to force hydration) then `camofox snapshot` again. |
 | `Stale refs` — click silently fails / "ref not found" | DOM mutated since the last snapshot | **Always re-snapshot** after `click`, `navigate`, `back`, `forward`, `refresh`, or dynamic content loads. |
 | `Screenshot is 0 bytes` | Tab crashed or navigated to `about:blank` | `camofox tabs` to verify the tab is still listed; if not, `camofox open <url>` again. |

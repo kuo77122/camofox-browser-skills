@@ -12,7 +12,7 @@ Liveness probe.
 
 ```bash
 curl -s "$BASE/health"
-# → {"status":"ok"}
+# → {"ok":true,"engine":"camoufox","browserConnected":true,...}
 ```
 
 Run this first when a command fails — see [troubleshooting.md](troubleshooting.md).
