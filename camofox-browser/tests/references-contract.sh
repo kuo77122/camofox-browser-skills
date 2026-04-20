@@ -36,3 +36,22 @@ check references/api-reference.md \
   "DELETE /tabs/:tabId" \
   "DELETE /sessions/:userId" \
   "GET /tabs/:tabId/links"
+
+check references/commands.md \
+  "camofox open" \
+  "camofox navigate" \
+  "camofox snapshot" \
+  "camofox click" \
+  "camofox type" \
+  "camofox scroll" \
+  "camofox screenshot" \
+  "camofox tabs" \
+  "camofox close" \
+  "camofox close-all" \
+  "camofox search" \
+  "camofox back" \
+  "camofox forward" \
+  "camofox refresh" \
+  "camofox health" \
+  "camofox links" \
+  "curl -s"
