@@ -25,7 +25,7 @@ cleanup() { bash "$W" --session "$SESSION" close-all >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 
 step "health"
-bash "$W" health | grep -q '"status":"ok"'
+bash "$W" health | grep -qE '"ok":true|"status":"ok"'
 
 step "open"
 bash "$W" --session "$SESSION" open "https://example.com" | grep -q "^Tab: "
@@ -46,7 +46,7 @@ step "tabs"
 bash "$W" --session "$SESSION" tabs | grep -q "https://example.com"
 
 step "close"
-bash "$W" --session "$SESSION" close | grep -q "^Closed tab:"
+bash "$W" --session "$SESSION" close | grep -q "Closed tab:"
 
 echo
 echo "OK: smoke test passed"

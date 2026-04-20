@@ -35,6 +35,14 @@ See [camofox-browser/references/modes.md](camofox-browser/references/modes.md) f
     camofox screenshot
     camofox close
 
+## Testing
+
+    bash run-tests.sh
+
+Runs every static/contract test. The end-to-end smoke test is skipped if no Camofox server is reachable. To exercise the remote path against a running container:
+
+    CAMOFOX_URL=http://172.17.0.1:9377 bash camofox-browser/tests/smoke.sh
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
