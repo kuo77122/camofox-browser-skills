@@ -23,3 +23,16 @@ check references/modes.md \
   "172.17.0.1" \
   "docker" \
   "health"
+
+check references/api-reference.md \
+  "GET /health" \
+  "POST /tabs" \
+  "GET /tabs/:tabId/snapshot" \
+  "POST /tabs/:tabId/click" \
+  "POST /tabs/:tabId/type" \
+  "POST /tabs/:tabId/scroll" \
+  "POST /tabs/:tabId/navigate" \
+  "GET /tabs/:tabId/screenshot" \
+  "DELETE /tabs/:tabId" \
+  "DELETE /sessions/:userId" \
+  "GET /tabs/:tabId/links"
