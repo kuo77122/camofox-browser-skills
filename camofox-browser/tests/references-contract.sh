@@ -70,3 +70,12 @@ check references/macros.md \
   "@instagram_search" \
   "@tiktok_search" \
   "@twitch_search"
+
+check references/troubleshooting.md \
+  "Failed to connect" \
+  "Empty snapshot" \
+  "Stale refs" \
+  "Screenshot is 0 bytes" \
+  "docker ps" \
+  "CAMOFOX_URL" \
+  "CAMOFOX_PORT"
