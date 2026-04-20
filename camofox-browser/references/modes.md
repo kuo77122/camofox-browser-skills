@@ -20,16 +20,18 @@ camofox open https://example.com
 # Subsequent: (silent; server already up)
 ```
 
-**What happens on first use:**
+**First-use contract** (binding for `scripts/camofox.sh` + `scripts/setup.sh`):
 
-1. `scripts/camofox.sh` sees `CAMOFOX_URL` is unset → CLI mode, base URL `http://localhost:9377`.
-2. Health check (`curl http://localhost:9377/health`) fails.
-3. If `~/.camofox-browser/start.sh` is missing, `scripts/setup.sh` runs:
-   - Verifies Node ≥18
+1. `scripts/camofox.sh` sees `CAMOFOX_URL` is unset → CLI mode, base URL `http://localhost:${CAMOFOX_PORT:-9377}`.
+2. Health check (`curl $BASE/health`) fails.
+3. If `~/.camofox-browser/start.sh` is missing, `scripts/setup.sh` runs and MUST:
+   - Verify Node ≥18 (fail with an install hint otherwise)
    - `npm install @askjo/camofox-browser` into `~/.camofox-browser/`
-   - Writes `~/.camofox-browser/start.sh`
-   - Spawns server; waits up to 120 s for `/health`
-4. The PID is written to `/tmp/camofox-state/server.pid` so `camofox stop` can terminate it.
+   - Write `~/.camofox-browser/start.sh`
+   - Spawn the server and wait up to 120 s for `/health`
+4. The server PID MUST be written to `/tmp/camofox-state/server.pid` so `camofox stop` can terminate it.
+
+Implementations deviating from this list must update both the script and this contract in the same commit.
 
 **Customising the port:**
 
@@ -74,7 +76,11 @@ services:
     restart: unless-stopped
 ```
 
-From an agent container on the same host, the Camofox service is reachable at `http://172.17.0.1:9377` (the default Docker bridge gateway on Linux; macOS Docker Desktop and Podman use different addresses). From another Docker network, use the service name or the host's LAN IP.
+How to reach this container from the agent depends on the agent's own networking:
+
+- **Agent on a bridge network** (`docker run` default, most compose services): use `http://172.17.0.1:9377` — the default Docker bridge gateway on Linux. macOS Docker Desktop and Podman use different addresses (e.g. `host.docker.internal`).
+- **Agent with `network_mode: host`** (or running on the host directly): use `http://localhost:9377`.
+- **Agent on a separate Docker network**: use the Camofox container's service name or the host's LAN IP.
 
 Connectivity sanity check:
 
