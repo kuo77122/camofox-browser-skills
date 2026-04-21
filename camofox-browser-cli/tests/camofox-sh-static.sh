@@ -2,20 +2,19 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-F="scripts/camofox.sh"
+F="scripts/camofox-cli.sh"
 [ -x "$F" ] || { echo "FAIL: $F not executable" >&2; exit 1; }
 bash -n "$F" || { echo "FAIL: $F syntax error" >&2; exit 1; }
 
 for needle in \
     "set -euo pipefail" \
     "CAMOFOX_PORT" \
-    "CAMOFOX_URL" \
     "CAMOFOX_SESSION" \
-    "REMOTE_MODE" \
     "ensure_server_running" \
     "strip_ref" \
     "python3 -c" \
-    "/tmp/camofox-state"
+    "/tmp/camofox-state" \
+    "--port"
 do
   grep -q -- "$needle" "$F" || { echo "FAIL: $F missing '$needle'" >&2; exit 1; }
 done
@@ -28,14 +27,8 @@ for cmd in start stop health open goto navigate snapshot screenshot tabs click t
   fi
 done
 
-# Remote-mode bailouts on start/stop.
-grep -q "Remote mode" "$F" || { echo "FAIL: $F must handle remote-mode start/stop" >&2; exit 1; }
-
-# Help text exists and prints both modes.
-grep -q "CAMOFOX_URL" "$F" || { echo "FAIL: help missing CAMOFOX_URL" >&2; exit 1; }
-
 # Running with no server must still print help without errors.
 out=$(bash "$F" help)
 echo "$out" | grep -q "USAGE" || { echo "FAIL: help didn't run cleanly" >&2; exit 1; }
 
-echo "OK: scripts/camofox.sh"
+echo "OK: scripts/camofox-cli.sh"

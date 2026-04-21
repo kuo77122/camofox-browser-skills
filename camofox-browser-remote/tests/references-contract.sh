@@ -13,15 +13,12 @@ check() {
   echo "OK: $file"
 }
 
-# modes.md must cover both shapes, every env var, Docker networking, and mode-detection order.
-check references/modes.md \
-  "CAMOFOX_URL" \
-  "CAMOFOX_PORT" \
-  "CAMOFOX_SESSION" \
-  "CLI mode" \
-  "Remote mode" \
+# docker.md must cover networking, docker-compose, and the gateway address.
+check references/docker.md \
   "172.17.0.1" \
-  "docker" \
+  "network_mode" \
+  "docker compose" \
+  "CAMOFOX_URL" \
   "health"
 
 check references/api-reference.md \
@@ -38,22 +35,22 @@ check references/api-reference.md \
   "GET /tabs/:tabId/links"
 
 check references/commands.md \
-  "camofox open" \
-  "camofox navigate" \
-  "camofox snapshot" \
-  "camofox click" \
-  "camofox type" \
-  "camofox scroll" \
-  "camofox screenshot" \
-  "camofox tabs" \
-  "camofox close" \
-  "camofox close-all" \
-  "camofox search" \
-  "camofox back" \
-  "camofox forward" \
-  "camofox refresh" \
-  "camofox health" \
-  "camofox links" \
+  "camofox-remote open" \
+  "camofox-remote navigate" \
+  "camofox-remote snapshot" \
+  "camofox-remote click" \
+  "camofox-remote type" \
+  "camofox-remote scroll" \
+  "camofox-remote screenshot" \
+  "camofox-remote tabs" \
+  "camofox-remote close" \
+  "camofox-remote close-all" \
+  "camofox-remote search" \
+  "camofox-remote back" \
+  "camofox-remote forward" \
+  "camofox-remote refresh" \
+  "camofox-remote health" \
+  "camofox-remote links" \
   "curl -s"
 
 check references/macros.md \
@@ -73,9 +70,8 @@ check references/macros.md \
 
 check references/troubleshooting.md \
   "Failed to connect" \
-  "Empty snapshot" \
-  "Stale refs" \
-  "Screenshot is 0 bytes" \
   "docker ps" \
   "CAMOFOX_URL" \
-  "CAMOFOX_PORT"
+  "Stale refs" \
+  "Empty snapshot" \
+  "Screenshot is 0 bytes"

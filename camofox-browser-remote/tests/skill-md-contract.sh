@@ -10,10 +10,13 @@ if [ "$LINES" -gt 180 ]; then
   exit 1
 fi
 
+# Check header frontmatter
+grep -q "name: camofox-browser-remote" "$F" || { echo "FAIL: SKILL.md missing 'name: camofox-browser-remote'" >&2; exit 1; }
+grep -q "allowed-tools: Bash(camofox-browser-remote:\*)" "$F" || { echo "FAIL: SKILL.md missing correct allowed-tools" >&2; exit 1; }
+
 for needle in \
     "CAMOFOX_URL" \
-    "CAMOFOX_PORT" \
-    "references/modes.md" \
+    "references/docker.md" \
     "references/commands.md" \
     "references/api-reference.md" \
     "references/macros.md" \
@@ -27,8 +30,9 @@ do
   fi
 done
 
+# Core commands must appear (start/stop are noted as no-ops but must still appear)
 for cmd in open navigate snapshot click type scroll screenshot tabs close close-all search back forward refresh health links start stop; do
-  if ! grep -qE "\\bcamofox $cmd\\b|\`$cmd\\b" "$F"; then
+  if ! grep -qE "\\bcamofox(-remote)? $cmd\\b|\`$cmd\\b" "$F"; then
     echo "FAIL: SKILL.md missing command '$cmd'" >&2
     exit 1
   fi

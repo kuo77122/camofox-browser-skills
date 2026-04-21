@@ -2,7 +2,7 @@
 
 Every `camofox` command, with argument signature, example, expected output, and the raw `curl` equivalent so you can script without the wrapper.
 
-`$BASE` = resolved base URL (see [modes.md](modes.md)). `$USER_ID` = `camofox-${CAMOFOX_SESSION:-default}`. `$TAB_ID` = value stored in `/tmp/camofox-state/${CAMOFOX_SESSION:-default}.tab`.
+All commands run against `localhost:${CAMOFOX_PORT:-9377}`. `$BASE = http://localhost:${CAMOFOX_PORT:-9377}`. `$USER_ID` = `camofox-${CAMOFOX_SESSION:-default}`. `$TAB_ID` = value stored in `/tmp/camofox-state/${CAMOFOX_SESSION:-default}.tab`.
 
 ---
 
@@ -23,7 +23,7 @@ curl -s "$BASE/health"
 
 ### `camofox start` / `camofox stop`
 
-CLI mode: spawns / kills `node server.js`. Remote mode: no-op with warning (the server's lifecycle is out of scope).
+CLI mode: spawns / kills `node server.js`. On first run, `start` auto-installs `@askjo/camofox-browser` if not already present.
 
 ---
 
@@ -264,7 +264,7 @@ curl -s -X DELETE "$BASE/sessions/$USER_ID"
 ## Global Flags
 
 - `--session <name>` — override `CAMOFOX_SESSION` for this call only.
-- `--port <port>` — override `CAMOFOX_PORT` for this call only (CLI mode; ignored if `CAMOFOX_URL` is set).
+- `--port <port>` — override `CAMOFOX_PORT` for this call only.
 
 ```bash
 camofox --session work open https://mail.example.com

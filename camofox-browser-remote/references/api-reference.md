@@ -1,6 +1,6 @@
 # REST API Reference
 
-Base URL resolution: see [modes.md](modes.md). This page uses `$BASE` as a placeholder — substitute `http://localhost:9377` (CLI) or `$CAMOFOX_URL` (remote).
+Base URL: `$CAMOFOX_URL` (required env var — e.g. `http://172.17.0.1:9377`). This page uses `$BASE` as a placeholder — substitute your `CAMOFOX_URL` value.
 
 All request bodies are `application/json`. Responses are JSON unless noted (screenshot returns `image/png`).
 

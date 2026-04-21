@@ -3,12 +3,9 @@
 #
 # Usage:
 #   bash multi-session.sh <url1> <url2> [url3 ...]
-#
-# Works in both modes; remote example:
-#   CAMOFOX_URL=http://172.17.0.1:9377 bash multi-session.sh https://a.com https://b.com
 set -euo pipefail
 
-CAMOFOX="${CAMOFOX:-bash $HOME/.claude/skills/camofox-browser/scripts/camofox.sh}"
+CAMOFOX="${CAMOFOX:-bash $HOME/.claude/skills/camofox-browser-cli/scripts/camofox-cli.sh}"
 OUT="/tmp/camofox-multi"
 
 if [ $# -lt 2 ]; then

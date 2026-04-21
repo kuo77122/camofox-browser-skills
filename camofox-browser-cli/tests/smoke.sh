@@ -1,20 +1,16 @@
 #!/usr/bin/env bash
-# End-to-end smoke test — mode-agnostic.
+# End-to-end smoke test — CLI mode only.
 # Exit 0=pass, 77=skip (no server), other=fail.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-W="./scripts/camofox.sh"
+W="./scripts/camofox-cli.sh"
 SESSION="smoke-$$"
 
-BASE="${CAMOFOX_URL:-http://localhost:${CAMOFOX_PORT:-9377}}"
+BASE="http://localhost:${CAMOFOX_PORT:-9377}"
 echo "Smoke test against: $BASE"
 
 if ! curl -sf "$BASE/health" >/dev/null 2>&1; then
-    if [ -n "${CAMOFOX_URL:-}" ]; then
-        echo "SKIP: remote server at $CAMOFOX_URL is not reachable"
-        exit 77
-    fi
     echo "SKIP: no local server and auto-install is out-of-scope for CI smoke"
     exit 77
 fi

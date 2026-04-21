@@ -1,31 +1,45 @@
 # camofox-browser-skills
 
-Dual-mode anti-detection browser skill for AI agents, powered by [Camoufox](https://camoufox.com/) via [jo-inc/camofox-browser](https://github.com/jo-inc/camofox-browser).
+Two focused anti-detection browser skills for AI agents, powered by [Camoufox](https://camoufox.com/) via [jo-inc/camofox-browser](https://github.com/jo-inc/camofox-browser).
 
-Unlike upstream skill variants that assume a local CLI install, this skill works in **both** environments with the same command surface:
+## Which skill should I install?
 
-1. **CLI mode** — auto-installs the Node.js server on `localhost:9377`.
-2. **Remote mode** — talks to an already-running server (e.g. a Docker container on `http://172.17.0.1:9377`) via `curl`, with no local dependencies beyond `bash`, `curl`, and `python3`.
+| Scenario | Skill |
+|----------|-------|
+| Local development — no server running yet | `camofox-browser-cli` (auto-installs everything) |
+| Docker container, shared staging, or CI | `camofox-browser-remote` (requires `CAMOFOX_URL`) |
 
-## Install (Claude Code)
+Both skills expose an identical command surface (`open`, `snapshot`, `click`, `type`, `screenshot`, …).
+
+## Install
+
+### CLI skill (local dev, auto-installs Node.js server)
 
 Global:
 
-    npx skills add kuo77122/camofox-browser-skills -s camofox-browser -g
+    npx skills add kuo77122/camofox-browser-skills -s camofox-browser-cli -g
 
 Project-level:
 
-    npx skills add kuo77122/camofox-browser-skills -s camofox-browser
+    npx skills add kuo77122/camofox-browser-skills -s camofox-browser-cli
 
-## Mode Selection
+Requires Node.js 18+. First command auto-installs `@askjo/camofox-browser` to `~/.camofox-browser/`.
 
-| Scenario | Env | Notes |
-|----------|-----|-------|
-| Local development | *(none)* | Auto-installs `@askjo/camofox-browser`, spawns server on `localhost:9377` |
-| Custom local port | `CAMOFOX_PORT=8080` | CLI mode on a different port |
-| Docker / remote | `CAMOFOX_URL=http://172.17.0.1:9377` | Skips install/start entirely |
+### Remote skill (Docker / shared server)
 
-See [camofox-browser/references/modes.md](camofox-browser/references/modes.md) for full details.
+Global:
+
+    npx skills add kuo77122/camofox-browser-skills -s camofox-browser-remote -g
+
+Project-level:
+
+    npx skills add kuo77122/camofox-browser-skills -s camofox-browser-remote
+
+Requires `CAMOFOX_URL` to be set before use:
+
+    export CAMOFOX_URL=http://172.17.0.1:9377   # bridge network
+    # or
+    export CAMOFOX_URL=http://localhost:9377      # host network
 
 ## Quick Start
 
@@ -39,9 +53,11 @@ See [camofox-browser/references/modes.md](camofox-browser/references/modes.md) f
 
     bash run-tests.sh
 
-Runs every static/contract test. The end-to-end smoke test is skipped if no Camofox server is reachable. To exercise the remote path against a running container:
+Runs all static/contract tests for both skills. Smoke tests skip if no server is reachable.
 
-    CAMOFOX_URL=http://172.17.0.1:9377 bash camofox-browser/tests/smoke.sh
+To exercise the remote skill against a running container:
+
+    CAMOFOX_URL=http://172.17.0.1:9377 bash camofox-browser-remote/tests/smoke.sh
 
 ## License
 

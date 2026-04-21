@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
-# camofox — unified CLI wrapper for camofox-browser (CLI + Remote modes)
-#
-# Mode detection:
-#   CAMOFOX_URL set → Remote mode, base = $CAMOFOX_URL (no install, no spawn)
-#   otherwise       → CLI mode, base = http://localhost:${CAMOFOX_PORT:-9377}
+# camofox-cli — CLI-mode wrapper for camofox-browser-cli skill
 set -euo pipefail
 
 # ── Configuration ──
@@ -22,14 +18,8 @@ while [[ "${1:-}" == --* ]]; do
     esac
 done
 
-# ── Resolve mode & base URL ──
-if [ -n "${CAMOFOX_URL:-}" ]; then
-    REMOTE_MODE=1
-    CAMOFOX_BASE="${CAMOFOX_URL%/}"   # strip trailing slash
-else
-    REMOTE_MODE=0
-    CAMOFOX_BASE="http://localhost:$CAMOFOX_PORT"
-fi
+# ── Base URL (CLI mode only) ──
+CAMOFOX_BASE="http://localhost:$CAMOFOX_PORT"
 
 COMMAND="${1:-help}"
 shift || true
@@ -67,17 +57,11 @@ require_active_tab() {
 
 strip_ref() { echo "${1#@}"; }   # @e1 → e1
 
-# ── Mode-aware server bootstrap ──
+# ── Server bootstrap (CLI mode only) ──
 ensure_server_running() {
     # If reachable, nothing to do.
     if curl -sf "$CAMOFOX_BASE/health" >/dev/null 2>&1; then
         return 0
-    fi
-
-    if [ "$REMOTE_MODE" -eq 1 ]; then
-        echo "camofox: cannot reach $CAMOFOX_BASE — is the container up?" >&2
-        echo "  Hint: docker ps | grep camofox" >&2
-        exit 1
     fi
 
     # CLI mode: install if needed, then spawn.
@@ -119,18 +103,10 @@ case "$COMMAND" in
 
 # Server control
 start)
-    if [ "$REMOTE_MODE" -eq 1 ]; then
-        echo "Remote mode ($CAMOFOX_BASE): 'start' is a no-op. Manage the container externally." >&2
-        exit 0
-    fi
     ensure_server_running
     echo "Server running on port $CAMOFOX_PORT"
     ;;
 stop)
-    if [ "$REMOTE_MODE" -eq 1 ]; then
-        echo "Remote mode ($CAMOFOX_BASE): 'stop' is a no-op. Manage the container externally." >&2
-        exit 0
-    fi
     if [ -f "$STATE_DIR/server.pid" ]; then
         PID=$(cat "$STATE_DIR/server.pid")
         if kill -0 "$PID" 2>/dev/null; then
@@ -316,18 +292,14 @@ close-all)
 
 --help|-h|help)
     cat <<HELP
-camofox — Anti-detection browser automation (Camoufox)
+camofox-cli — CLI-mode anti-detection browser (Camoufox)
 
 USAGE:
   camofox [--session NAME] [--port PORT] <command> [args]
 
-Mode detection:
-  CAMOFOX_URL set   → Remote mode, base URL = \$CAMOFOX_URL
-  CAMOFOX_URL unset → CLI mode, base URL = http://localhost:\${CAMOFOX_PORT:-9377}
-
 SERVER:
-  start                       Start server (CLI mode only)
-  stop                        Stop server (CLI mode only)
+  start                       Start server (auto-installs on first use)
+  stop                        Stop server
   health                      Health check
 
 NAVIGATION:
@@ -357,10 +329,9 @@ CLEANUP:
 
 OPTIONS:
   --session NAME              Named session (default: "default")
-  --port PORT                 Port (CLI mode only; ignored if CAMOFOX_URL set)
+  --port PORT                 Port on localhost (default: 9377)
 
 ENVIRONMENT:
-  CAMOFOX_URL                 Remote base URL (wins over CAMOFOX_PORT)
   CAMOFOX_PORT                Port for CLI mode (default: 9377)
   CAMOFOX_SESSION             Default session name
   HTTPS_PROXY                 Outbound proxy for browser traffic

@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
-# Template: anti-detection scrape that works in either mode.
+# Template: anti-detection scrape using camofox-browser-cli (CLI mode only).
 #
 # Usage:
 #   bash stealth-scrape.sh <url> [output-dir]
-#
-# In remote mode, set CAMOFOX_URL before running:
-#   CAMOFOX_URL=http://172.17.0.1:9377 bash stealth-scrape.sh https://x.com
 set -euo pipefail
 
-CAMOFOX="${CAMOFOX:-bash $HOME/.claude/skills/camofox-browser/scripts/camofox.sh}"
+CAMOFOX="${CAMOFOX:-bash $HOME/.claude/skills/camofox-browser-cli/scripts/camofox-cli.sh}"
 URL="${1:?Usage: stealth-scrape.sh <url> [output-dir]}"
 OUT="${2:-/tmp/camofox-scrape}"
 
 mkdir -p "$OUT"
 echo "Stealth scraping: $URL"
 echo "Output:           $OUT"
-echo "Base URL:         ${CAMOFOX_URL:-http://localhost:${CAMOFOX_PORT:-9377}}"
+echo "Base URL:         http://localhost:${CAMOFOX_PORT:-9377}"
 
 $CAMOFOX open "$URL"
 sleep 3                                    # allow SPA hydration
