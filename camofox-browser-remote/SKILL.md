@@ -19,6 +19,8 @@ export CAMOFOX_URL=http://172.17.0.1:9377   # required — no default
 The server runs externally (Docker container, shared staging, CI). This skill only drives it.
 See [references/docker.md](references/docker.md) for Docker networking details.
 
+> **Trust requirement:** Every command — page snapshots, screenshots, typed text, navigation history — is sent over HTTP to `CAMOFOX_URL`. Only point this at a server you own and control. Do not use a shared or third-party endpoint if you will visit sites with credentials or sensitive data.
+
 ## Quick Start
 
 ```bash
@@ -39,12 +41,11 @@ camofox-remote close                         # Close tab
 5. **Repeat** — the server stays running between commands
 
 ```bash
-camofox-remote open https://example.com/login
+camofox-remote open https://example.com/search
 camofox-remote snapshot
-# @e1 [input] Email  @e2 [input] Password  @e3 [button] Sign In
-camofox-remote type @e1 "user@example.com"
-camofox-remote type @e2 "password123"
-camofox-remote click @e3
+# @e1 [input] Search box  @e2 [button] Submit
+camofox-remote type @e1 "camoufox anti-detection"
+camofox-remote click @e2
 camofox-remote snapshot                      # MUST re-snapshot after navigation
 ```
 

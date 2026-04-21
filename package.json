@@ -18,7 +18,13 @@
     "openclaw"
   ],
   "skills": {
-    "camofox-browser-cli":    "./camofox-browser-cli",
-    "camofox-browser-remote": "./camofox-browser-remote"
+    "camofox-browser-cli": {
+      "path": "./camofox-browser-cli",
+      "requiredEnv": []
+    },
+    "camofox-browser-remote": {
+      "path": "./camofox-browser-remote",
+      "requiredEnv": ["CAMOFOX_URL"]
+    }
   }
 }
