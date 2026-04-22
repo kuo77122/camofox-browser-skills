@@ -18,8 +18,8 @@
     "openclaw"
   ],
   "bin": {
-    "camofox": "./camofox-browser-cli/bin/camofox",
-    "camofox-remote": "./camofox-browser-remote/bin/camofox-remote"
+    "camofox": "./camofox-browser-cli/scripts/camofox-cli.sh",
+    "camofox-remote": "./camofox-browser-remote/scripts/camofox-remote.sh"
   },
   "skills": {
     "camofox-browser-cli": {

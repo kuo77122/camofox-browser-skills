@@ -12,11 +12,11 @@ Stealth browser automation via Camoufox. CLI mode only — auto-installs `@askjo
 
 > **Deployment:** First use auto-installs and starts the server. To control server manually: `camofox start` / `camofox stop`.
 
-> **If `camofox` is not found on PATH:** use the `bin/` wrapper that ships with this skill — it self-locates regardless of where the folder was copied. Replace `<SKILL_DIR>` with the directory containing this SKILL.md file:
+> **If `camofox` is not found on PATH:** set an alias using the script that ships with this skill. Replace `<SKILL_DIR>` with the directory containing this SKILL.md file:
 > ```bash
-> alias camofox="bash <SKILL_DIR>/bin/camofox"
+> alias camofox="bash <SKILL_DIR>/scripts/camofox-cli.sh"
 > ```
-> Example: if SKILL.md is at `~/my-skills/camofox-browser-cli/SKILL.md`, use `~/my-skills/camofox-browser-cli`.
+> Example: if this SKILL.md is at `~/my-skills/camofox-browser-cli/SKILL.md`, use `~/my-skills/camofox-browser-cli`.
 
 ## Quick Start
 
