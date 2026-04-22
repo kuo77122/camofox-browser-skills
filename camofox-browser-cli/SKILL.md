@@ -12,6 +12,13 @@ Stealth browser automation via Camoufox. CLI mode only — auto-installs `@askjo
 
 > **Deployment:** First use auto-installs and starts the server. To control server manually: `camofox start` / `camofox stop`.
 
+> **If `camofox` is not found:** the skill was installed without npm bin linking. Run once to wire it up:
+> ```bash
+> _p=$(find ~/.skills ~/.local ~/.config ~/.npm -name "camofox-cli.sh" 2>/dev/null | head -1) && \
+>   mkdir -p ~/.local/bin && ln -sf "$_p" ~/.local/bin/camofox && \
+>   export PATH="$HOME/.local/bin:$PATH"
+> ```
+
 ## Quick Start
 
 ```bash

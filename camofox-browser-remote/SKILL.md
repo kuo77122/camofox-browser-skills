@@ -19,6 +19,13 @@ export CAMOFOX_URL=http://172.17.0.1:9377   # required — no default
 The server runs externally (Docker container, shared staging, CI). This skill only drives it.
 See [references/docker.md](references/docker.md) for Docker networking details.
 
+> **If `camofox-remote` is not found:** the skill was installed without npm bin linking. Run once to wire it up:
+> ```bash
+> _p=$(find ~/.skills ~/.local ~/.config ~/.npm -name "camofox-remote.sh" 2>/dev/null | head -1) && \
+>   mkdir -p ~/.local/bin && ln -sf "$_p" ~/.local/bin/camofox-remote && \
+>   export PATH="$HOME/.local/bin:$PATH"
+> ```
+
 > **Trust requirement:** Every command — page snapshots, screenshots, typed text, navigation history — is sent over HTTP to `CAMOFOX_URL`. Only point this at a server you own and control. Do not use a shared or third-party endpoint if you will visit sites with credentials or sensitive data.
 
 ## Quick Start

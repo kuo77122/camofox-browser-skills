@@ -1,6 +1,6 @@
 {
   "name": "camofox-browser-skills",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI and Remote anti-detection Camoufox browser skills for Claude Code / OpenClaw agents.",
   "license": "MIT",
   "author": "kuo77122 <kuo77122@gmail.com>",
@@ -17,6 +17,10 @@
     "automation",
     "openclaw"
   ],
+  "bin": {
+    "camofox": "./camofox-browser-cli/scripts/camofox-cli.sh",
+    "camofox-remote": "./camofox-browser-remote/scripts/camofox-remote.sh"
+  },
   "skills": {
     "camofox-browser-cli": {
       "path": "./camofox-browser-cli",
