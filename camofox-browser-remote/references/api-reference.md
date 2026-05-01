@@ -150,6 +150,42 @@ Directions: `down`, `up`, `left`, `right`.
 
 ---
 
+## POST /tabs/:tabId/evaluate
+
+Execute arbitrary JavaScript in the page context and return the result. Use this when `snapshot` and `links` cannot surface what you need — hidden iframes, SPA state, dynamically computed values, or elements outside the accessibility tree.
+
+Body:
+
+```json
+{ "userId": "camofox-default", "script": "document.title" }
+```
+
+Response:
+
+```json
+{ "result": "My Page Title" }
+```
+
+The `script` value is evaluated with `page.evaluate()` (Playwright). Any serialisable return value is echoed back; non-serialisable objects (DOM nodes, functions) return `null`.
+
+**Example — extract a hidden iframe src on a Vue.js/Element UI SPA:**
+
+```bash
+# Step 1 — confirm the element exists
+curl -s -X POST "$BASE/tabs/abc123/evaluate" \
+  -H "Content-Type: application/json" \
+  -d '{"userId":"camofox-default","script":"document.getElementById(\"iframe_MP4\")?.src ?? null"}'
+# → {"result":"https://host.example.com/nbr/MultiThreadDownloadServlet?token=..."}
+
+# Step 2 — pull the full URL out for downstream use
+curl -s -X POST "$BASE/tabs/abc123/evaluate" \
+  -H "Content-Type: application/json" \
+  -d '{"userId":"camofox-default","script":"[...document.querySelectorAll(\"iframe\")].map(f=>({id:f.id,src:f.src}))"}'
+# → {"result":[{"id":"iframe_MP4","src":"https://..."}]}
+```
+
+---
+
 ## GET /tabs/:tabId/links?userId=X
 
 Every anchor on the page, deduplicated.
