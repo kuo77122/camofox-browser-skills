@@ -178,6 +178,16 @@ links)
     api GET "/tabs/$TAB_ID/links?userId=$USER_ID"
     echo ""
     ;;
+eval)
+    SCRIPT="${1:?Usage: camofox-remote eval \"<js>\"}"
+    TAB_ID=$(require_active_tab)
+    ensure_server_running
+    BODY=$(python3 -c "
+import json, sys
+print(json.dumps({'userId': sys.argv[1], 'expression': sys.argv[2]}))
+" "$USER_ID" "$SCRIPT")
+    api_json POST "/tabs/$TAB_ID/evaluate" "$BODY"
+    ;;
 
 # Interaction
 click)
@@ -295,6 +305,7 @@ PAGE STATE:
   screenshot [path]           Save screenshot
   tabs                        List open tabs
   links                       All anchors on current page
+  eval "<js>"                 Execute arbitrary JavaScript and return result
 
 INTERACTION:
   click @e1                   Click element by ref

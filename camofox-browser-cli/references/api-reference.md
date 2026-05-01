@@ -157,16 +157,16 @@ Execute arbitrary JavaScript in the page context and return the result. Use this
 Body:
 
 ```json
-{ "userId": "camofox-default", "script": "document.title" }
+{ "userId": "camofox-default", "expression": "document.title" }
 ```
 
 Response:
 
 ```json
-{ "result": "My Page Title" }
+{ "ok": true, "result": "My Page Title" }
 ```
 
-The `script` value is evaluated with `page.evaluate()` (Playwright). Any serialisable return value is echoed back; non-serialisable objects (DOM nodes, functions) return `null`.
+The `expression` value is evaluated with `page.evaluate()` (Playwright). Any serialisable return value is echoed back; non-serialisable objects (DOM nodes, functions) return `null`.
 
 **Example — extract a hidden iframe src on a Vue.js/Element UI SPA:**
 
@@ -174,13 +174,13 @@ The `script` value is evaluated with `page.evaluate()` (Playwright). Any seriali
 # Step 1 — confirm the element exists
 curl -s -X POST "$BASE/tabs/abc123/evaluate" \
   -H "Content-Type: application/json" \
-  -d '{"userId":"camofox-default","script":"document.getElementById(\"iframe_MP4\")?.src ?? null"}'
+  -d '{"userId":"camofox-default","expression":"document.getElementById(\"iframe_MP4\")?.src ?? null"}'
 # → {"result":"https://host.example.com/nbr/MultiThreadDownloadServlet?token=..."}
 
 # Step 2 — pull the full URL out for downstream use
 curl -s -X POST "$BASE/tabs/abc123/evaluate" \
   -H "Content-Type: application/json" \
-  -d '{"userId":"camofox-default","script":"[...document.querySelectorAll(\"iframe\")].map(f=>({id:f.id,src:f.src}))"}'
+  -d '{"userId":"camofox-default","expression":"[...document.querySelectorAll(\"iframe\")].map(f=>({id:f.id,src:f.src}))"}'
 # → {"result":[{"id":"iframe_MP4","src":"https://..."}]}
 ```
 

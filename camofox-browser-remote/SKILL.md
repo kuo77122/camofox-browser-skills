@@ -34,6 +34,7 @@ camofox-remote open https://example.com      # Create tab + navigate
 camofox-remote snapshot                      # Get page elements with @refs
 camofox-remote click @e1                     # Click element
 camofox-remote type @e2 "hello"              # Type text
+camofox-remote eval "document.title"         # Execute arbitrary JavaScript
 camofox-remote screenshot                    # Save PNG
 camofox-remote close                         # Close tab
 ```
@@ -61,7 +62,7 @@ camofox-remote snapshot                      # MUST re-snapshot after navigation
 |---|---|
 | Server | `health`, `start` (no-op — manage container externally), `stop` (no-op — manage container externally) |
 | Navigation | `open <url>`, `navigate <url>`, `back`, `forward`, `refresh`, `scroll [down\|up\|left\|right]` |
-| Page state | `snapshot`, `screenshot [path]`, `tabs`, `links` |
+| Page state | `snapshot`, `screenshot [path]`, `tabs`, `links`, `eval "<js>"` |
 | Interaction | `click @eN`, `type @eN "text"` |
 | Search | `search google "query"` (13 macros — see [references/macros.md](references/macros.md)) |
 | Session | `--session <name> <cmd>`, `close`, `close-all` |

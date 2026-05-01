@@ -48,6 +48,10 @@ rm -f "$PNG"
 step "tabs"
 bash "$W" --session "$SESSION" tabs | grep -q "https://example.com"
 
+step "eval"
+EVAL_OUT=$(bash "$W" --session "$SESSION" eval "document.title")
+echo "$EVAL_OUT" | grep -qi "example" || { echo "FAIL: eval result missing expected title"; exit 1; }
+
 step "close"
 bash "$W" --session "$SESSION" close | grep -q "Closed tab:"
 

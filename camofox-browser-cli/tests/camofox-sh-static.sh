@@ -20,7 +20,7 @@ do
 done
 
 # Every public command must be a case-branch in the script.
-for cmd in start stop health open goto navigate snapshot screenshot tabs click type scroll back forward refresh search close close-all links help; do
+for cmd in start stop health open goto navigate snapshot screenshot tabs click type scroll back forward refresh search close close-all links eval help; do
   if ! grep -qE "^[[:space:]]*${cmd}\)|\\|${cmd}\)" "$F"; then
     echo "FAIL: $F missing command branch '$cmd'" >&2
     exit 1

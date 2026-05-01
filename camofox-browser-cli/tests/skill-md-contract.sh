@@ -32,7 +32,7 @@ if ! grep -qF "allowed-tools: Bash(camofox-browser-cli:*)" "$F"; then
   exit 1
 fi
 
-for cmd in open navigate snapshot click type scroll screenshot tabs close close-all search back forward refresh health links start stop; do
+for cmd in open navigate snapshot click type scroll screenshot tabs close close-all search back forward refresh health links eval start stop; do
   if ! grep -qE "\\bcamofox $cmd\\b|\`$cmd\\b" "$F"; then
     echo "FAIL: SKILL.md missing command '$cmd'" >&2
     exit 1

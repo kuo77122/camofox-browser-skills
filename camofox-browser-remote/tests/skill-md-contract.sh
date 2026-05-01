@@ -31,7 +31,7 @@ do
 done
 
 # Core commands must appear (start/stop are noted as no-ops but must still appear)
-for cmd in open navigate snapshot click type scroll screenshot tabs close close-all search back forward refresh health links start stop; do
+for cmd in open navigate snapshot click type scroll screenshot tabs close close-all search back forward refresh health links eval start stop; do
   if ! grep -qE "\\bcamofox(-remote)? $cmd\\b|\`$cmd\\b" "$F"; then
     echo "FAIL: SKILL.md missing command '$cmd'" >&2
     exit 1

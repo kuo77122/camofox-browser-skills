@@ -25,6 +25,7 @@ camofox open https://example.com          # Create tab + navigate
 camofox snapshot                          # Get page elements with @refs
 camofox click @e1                         # Click element
 camofox type @e2 "hello"                  # Type text
+camofox eval "document.title"             # Execute arbitrary JavaScript
 camofox screenshot                        # Save PNG
 camofox close                             # Close tab
 ```
@@ -53,7 +54,7 @@ camofox snapshot                          # MUST re-snapshot after navigation
 |---|---|
 | Server | `health`, `start`, `stop` |
 | Navigation | `open <url>`, `navigate <url>`, `back`, `forward`, `refresh`, `scroll [down\|up\|left\|right]` |
-| Page state | `snapshot`, `screenshot [path]`, `tabs`, `links` |
+| Page state | `snapshot`, `screenshot [path]`, `tabs`, `links`, `eval "<js>"` |
 | Interaction | `click @eN`, `type @eN "text"` |
 | Search | `search google "query"` (13 macros — see [references/macros.md](references/macros.md)) |
 | Session | `--session <name> <cmd>`, `close`, `close-all` |
